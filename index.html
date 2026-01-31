@@ -174,14 +174,14 @@
         /* Promo Banner */
         .promo-banner {
             position: sticky;
-            top: 80px; /* sits below fixed nav */
+            top: 80px;
             left: 0;
             transform: none;
             background: linear-gradient(135deg, #E63946, #FF6B9D);
             color: white;
             padding: 0.8rem 2rem;
             border-radius: 0 0 8px 8px;
-            z-index: 999; /* under nav (nav z-index:1000) */
+            z-index: 999;
             font-weight: 600;
             font-size: 0.95rem;
             box-shadow: 0 4px 15px rgba(230, 57, 70, 0.15);
@@ -200,7 +200,6 @@
             white-space: normal;
         }
 
-        /* Desktop: centered pill */
         @media (min-width: 641px) {
             .promo-banner {
                 position: sticky;
@@ -214,10 +213,9 @@
             }
         }
 
-        /* Mobile adjustments */
         @media (max-width: 640px) {
             .promo-banner {
-                top: 64px; /* below nav on small screens */
+                top: 64px;
                 border-radius: 0;
                 padding: 0.6rem 1rem;
                 box-shadow: none;
@@ -239,15 +237,27 @@
         }
 
         .hero-content {
-            max-width: 1400px;
+            max-width: 1100px;
             margin: 0 auto;
             width: 100%;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            grid-template-columns: 1fr; /* stacked: text first, gallery below */
+            gap: 2rem;
             align-items: center;
             position: relative;
             z-index: 1;
+        }
+
+        .hero-text {
+            text-align: center; /* center heading, paragraph and button */
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-gallery {
+            margin-top: 1.75rem;
+            display: flex;
+            justify-content: center;
         }
 
         .hero-text {
@@ -326,242 +336,128 @@
             box-shadow: 0 10px 30px rgba(196, 133, 111, 0.3);
         }
 
+        /* Carrusel 3D Estilo Tarjetas Apiladas (ajustado para flujo y centrado) */
         .hero-gallery {
             position: relative;
             width: 100%;
-            max-width: 500px;
-            height: 550px;
+            height: auto; /* let content determine height */
             animation: fadeInUp 1s ease-out 0.6s both;
-        }
-
-        .gallery-item {
-            position: absolute;
-            width: 300px;
-            height: 400px;
-            overflow: hidden;
-            background: white;
-            transition: transform 0.5s ease;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            border: 12px solid white;
-        }
-
-        .gallery-item-inner {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #FFD3E1 0%, #FF6B9D 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .gallery-item:nth-child(1) {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-8deg);
-            z-index: 1;
-            animation: slideInLeft 1s ease-out 0.8s both;
-        }
-
-        .gallery-item:nth-child(2) {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(0deg);
-            z-index: 3;
-            animation: slideInCenter 1s ease-out 1s both;
-        }
-
-        .gallery-item:nth-child(3) {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(8deg);
-            z-index: 2;
-            animation: slideInRight 1s ease-out 1.2s both;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translate(-120%, -50%) rotate(-15deg);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%) rotate(-8deg);
-            }
-        }
-
-        @keyframes slideInCenter {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -120%) rotate(0deg) scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%) rotate(0deg) scale(1);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translate(20%, -50%) rotate(15deg);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%) rotate(8deg);
-            }
-        }
-
-        .gallery-item:hover {
-            transform: translate(-50%, -50%) rotate(0deg) scale(1.05) !important;
-            z-index: 10;
-        }
-
-        .gallery-item:nth-child(1):hover {
-            box-shadow: 0 20px 60px rgba(230, 57, 70, 0.4);
-        }
-
-        .gallery-item:nth-child(2):hover {
-            box-shadow: 0 20px 60px rgba(255, 107, 157, 0.4);
-        }
-
-        .gallery-item:nth-child(3):hover {
-            box-shadow: 0 20px 60px rgba(255, 211, 225, 0.4);
-        }
-
-        /* Placeholder images with artistic patterns */
-        .gallery-item-inner::after {
-            content: '♥';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 8rem;
-            color: rgba(255, 255, 255, 0.2);
-            text-align: center;
-            animation: heartbeat 2s ease-in-out infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.05); }
-        }
-
-        .gallery-item:nth-child(1) .gallery-item-inner {
-            background: linear-gradient(135deg, #FFD3E1 0%, #FFB3C1 100%);
-        }
-
-        .gallery-item:nth-child(2) .gallery-item-inner {
-            background: linear-gradient(135deg, #FF6B9D 0%, #E63946 100%);
-        }
-
-        .gallery-item:nth-child(3) .gallery-item-inner {
-            background: linear-gradient(135deg, #F8D7DA 0%, #FFD3E1 100%);
-        }
-
-        /* Carousel styles (Hero) */
-        .carousel {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            position: relative;
-            width: 100%;
             justify-content: center;
+            padding: 1.5rem 0 0; /* space from CTA */
         }
 
-        .carousel-viewport {
-            overflow-x: auto;
-            overflow-y: hidden;
+        .carousel-3d {
+            position: relative;
             width: 100%;
-            max-width: 520px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            -ms-overflow-style: none; /* IE/Edge */
-            scrollbar-width: none; /* Firefox */
-        }
-
-        .carousel-viewport::-webkit-scrollbar { display: none; }
-
-        .carousel-track {
+            max-width: 760px;
+            height: auto;
+            perspective: 1400px;
             display: flex;
-            gap: 1.5rem;
+            justify-content: center;
             align-items: center;
-            padding: 1rem 0;
-            scroll-behavior: smooth;
-            will-change: transform, scroll-position;
         }
 
-        .carousel-item {
-            flex: 0 0 320px;
-            height: 420px;
-            border: 12px solid white;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            min-height: 0; /* allow slides to define height via aspect-ratio */
+            transform-style: preserve-3d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-slide {
+            position: relative;
+            width: clamp(220px, 28vw, 360px);
+            aspect-ratio: 4 / 5; /* keep consistent frame ratio */
+            margin: 0 12px;
+            background: #000; /* black frame background */
+            border: 5px solid #000; /* thinner black frame */
             border-radius: 6px;
             overflow: hidden;
-            scroll-snap-align: center;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.16);
+            transition: all 0.45s cubic-bezier(0.22, 0.8, 0.35, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            will-change: transform, opacity;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: white;
-            transition: transform 0.45s cubic-bezier(.22,.8,.35,1), box-shadow 0.25s ease;
-            transform-origin: center;
         }
 
-        /* States: centered vs sides (inclinado) */
-        .carousel-item.left {
-            transform: rotate(-8deg) translateY(4px) scale(0.95);
-            z-index: 3;
-            filter: saturate(0.95) brightness(0.98);
+        /* inner wrapper to control padding and contain image */
+        .slide-inner {
+            width: calc(100% - 12px);
+            height: calc(100% - 12px);
+            background: #fff; /* white interior to avoid black letterbox */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px; /* small gap between frame and image */
+            box-sizing: border-box;
         }
 
-        .carousel-item.right {
-            transform: rotate(8deg) translateY(4px) scale(0.95);
-            z-index: 3;
-            filter: saturate(0.95) brightness(0.98);
-        }
-
-        .carousel-item.active {
-            transform: translateY(-6px) rotate(0deg) scale(1.03);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.25);
-            z-index: 5;
-        }
-
-        .carousel-item.placeholder .gallery-item-inner {
-            width:100%;
-            height:100%;
-            background: linear-gradient(135deg, #FFD3E1 0%, #FF6B9D 100%);
-            position: relative;
-        }
-
-        .carousel-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .slide-inner img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* show whole photo scaled */
             display: block;
+            background: transparent;
         }
 
-        .carousel-btn {
-            background: rgba(0,0,0,0.06);
-            border: none;
-            padding: 0.45rem 0.8rem;
-            border-radius: 8px;
-            font-size: 1.4rem;
+        .carousel-slide.placeholder {
+            background: linear-gradient(135deg, #FFD3E1 0%, #FF6B9D 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Botones de navegación */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .carousel-nav button {
+            pointer-events: all;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid var(--color-accent);
+            color: var(--color-accent);
+            font-size: 1.5rem;
+            font-weight: bold;
             cursor: pointer;
-            color: var(--color-dark);
-            transition: background 0.2s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .carousel-btn:hover {
-            background: rgba(0,0,0,0.1);
+        .carousel-nav button:hover {
+            background: var(--color-accent);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.3);
         }
 
-        .carousel-btn:disabled {
-            opacity: 0.4;
-            cursor: default;
-        }
-
-        @media (max-width: 640px) {
-            .carousel-item { flex: 0 0 260px; height: 340px; border-width:10px; }
-            .carousel-viewport { max-width: 340px; }
-            .carousel-btn { font-size: 1.1rem; padding: 0.35rem 0.6rem; }
+        .carousel-nav button:active {
+            transform: scale(0.95);
         }
 
         /* Products Section */
@@ -601,72 +497,24 @@
         }
 
         .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
             max-width: 1400px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 3rem;
         }
 
         .product-card {
             background: var(--color-cream);
-            padding: 2rem;
+            padding: 2.5rem;
+            border-radius: 12px;
             transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-card:nth-child(1)::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 211, 225, 0.08), transparent);
-            pointer-events: none;
-        }
-
-        .product-card:nth-child(2)::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 107, 157, 0.06), transparent);
-            pointer-events: none;
-        }
-
-        .product-card:nth-child(3)::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(230, 57, 70, 0.05), transparent);
-            pointer-events: none;
-        }
-
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 0;
-            background: var(--color-accent);
-            transition: height 0.4s ease;
+            border: 1px solid rgba(230, 57, 70, 0.1);
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .product-card:hover::before {
-            height: 100%;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.15);
         }
 
         .product-card h3 {
@@ -679,73 +527,52 @@
         .product-card p {
             color: #666;
             margin-bottom: 1.5rem;
-            line-height: 1.8;
+            line-height: 1.7;
         }
 
         .product-features {
             list-style: none;
-            margin-bottom: 1.5rem;
+            padding: 0;
         }
 
         .product-features li {
-            padding: 0.5rem 0;
-            color: #555;
-            position: relative;
+            padding: 0.6rem 0;
             padding-left: 1.5rem;
+            position: relative;
+            color: #555;
         }
 
         .product-features li::before {
-            content: '✓';
+            content: '♥';
             position: absolute;
             left: 0;
             color: var(--color-accent);
-            font-weight: bold;
+            font-size: 0.9rem;
         }
 
         /* Social Section */
         .social {
             padding: 6rem 5%;
-            background: var(--color-dark);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .social::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(255, 107, 157, 0.08) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            background: linear-gradient(135deg, var(--color-pastel-pink) 0%, var(--color-pastel-lavender) 100%);
+            text-align: center;
         }
 
         .social-content {
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto;
-            text-align: center;
-            position: relative;
-            z-index: 1;
         }
 
         .social h2 {
             font-family: var(--font-display);
             font-size: 3rem;
             margin-bottom: 1rem;
+            color: var(--color-dark);
         }
 
         .social p {
             font-size: 1.2rem;
+            color: #555;
             margin-bottom: 3rem;
-            color: rgba(255,255,255,0.8);
-            font-weight: 300;
         }
 
         .social-links {
@@ -760,39 +587,20 @@
             align-items: center;
             gap: 0.8rem;
             padding: 1rem 2rem;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.2);
-            color: white;
+            background: white;
+            color: var(--color-dark);
             text-decoration: none;
+            border-radius: 50px;
             font-weight: 600;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .social-link::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: var(--color-accent);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-            z-index: -1;
-        }
-
-        .social-link:hover::before {
-            width: 400px;
-            height: 400px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .social-link:hover {
-            border-color: var(--color-accent);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(230, 57, 70, 0.2);
+            background: var(--color-accent);
+            color: white;
         }
 
         .social-icon {
@@ -803,96 +611,49 @@
 
         /* Footer */
         footer {
-            background: var(--color-cream);
-            padding: 3rem 5%;
+            background: var(--color-dark);
+            color: white;
             text-align: center;
-            border-top: 1px solid rgba(230, 57, 70, 0.2);
+            padding: 2rem;
+            font-size: 0.9rem;
         }
 
-        footer p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        /* Responsive */
+        /* Responsive Design */
         @media (max-width: 968px) {
-            .nav-links {
-                gap: 1.5rem;
-            }
-
             .hero-content {
                 grid-template-columns: 1fr;
-                gap: 3rem;
+                gap: 2.5rem;
             }
 
-            .hero h1 {
-                font-size: 3rem;
-            }
+            .hero h1 { font-size: 3rem; }
 
-            .hero-gallery {
-                max-width: 400px;
-                height: 450px;
-                margin: 0 auto;
-            }
+            .hero-gallery { padding-top: 1rem; }
 
-            .gallery-item {
-                width: 240px;
-                height: 320px;
-            }
+            .carousel-3d { max-width: 620px; }
 
-            .section-header h2 {
-                font-size: 2.5rem;
+            .carousel-slide {
+                width: clamp(200px, 36vw, 320px);
+                aspect-ratio: 4 / 5;
             }
         }
 
         @media (max-width: 640px) {
-            nav {
-                padding: 1rem 5%;
+            .hero { padding: 6rem 5% 3rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+
+            .hero-gallery { padding-top: 0.75rem; }
+
+            .carousel-3d { max-width: 360px; }
+
+            .carousel-slide {
+                width: clamp(180px, 66vw, 260px);
+                aspect-ratio: 4 / 5;
+                border-width: 4px;
             }
 
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .nav-links {
-                gap: 1rem;
-                font-size: 0.85rem;
-            }
-
-            .hero {
-                padding: 6rem 5% 3rem;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .hero-gallery {
-                max-width: 300px;
-                height: 350px;
-            }
-
-            .gallery-item {
-                width: 180px;
-                height: 240px;
-            }
-
-            .section-header h2 {
-                font-size: 2rem;
-            }
-
-            .social h2 {
-                font-size: 2rem;
-            }
-
-            .social-links {
-                flex-direction: column;
-                align-items: stretch;
-            }
+            .carousel-nav button { width: 40px; height: 40px; font-size: 1.2rem; }
+            .carousel-nav { padding: 0 10px; }
         }
     </style>
 </head>
@@ -923,21 +684,23 @@
                 <h1>El Regalo <span class="accent">Perfecto</span> para San Valentín</h1>
                 <p>Sorprende a tu pareja con un cuadro personalizado que captura sus momentos más especiales. Arte único hecho con amor, impresión premium y marcos elegantes que harán brillar su mirada.</p>
                 <a href="#productos" class="cta-button">Regala Amor ♥</a>
-            </div>
-            <div class="hero-gallery">
-                <div class="carousel" aria-roledescription="carousel" aria-label="Galería de marcos">
-                    <button class="carousel-btn prev" aria-label="Anterior">‹</button>
-                    <div class="carousel-viewport">
-                        <div class="carousel-track">
-                            <!-- Si no hay imágenes en images/frames se mostrará este placeholder con corazón -->
-                            <div class="carousel-item placeholder">
-                                <div class="gallery-item-inner"></div>
+
+                <!-- Moved gallery: sits directly under CTA to avoid visual distraction -->
+                <div class="hero-gallery">
+                    <div class="carousel-3d">
+                        <div class="carousel-container" id="carouselContainer">
+                            <!-- Las slides se cargarán dinámicamente -->
+                            <div class="carousel-slide placeholder">
+                                ♥
                             </div>
                         </div>
+                        <div class="carousel-nav">
+                            <button id="prevBtn" aria-label="Anterior">‹</button>
+                            <button id="nextBtn" aria-label="Siguiente">›</button>
+                        </div>
                     </div>
-                    <button class="carousel-btn next" aria-label="Siguiente">›</button>
                 </div>
-            </div>
+
         </div>
     </section>
 
@@ -1044,7 +807,7 @@
             const currentScroll = window.pageYOffset;
             
             if (currentScroll > 100) {
-                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+                nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
             } else {
                 nav.style.boxShadow = 'none';
             }
@@ -1074,202 +837,294 @@
             observer.observe(card);
         });
 
-        /* Carrusel en Hero: carga hasta 3 imágenes aleatorias desde images/frames (prefiriendo JPEG) */
-        (async function() {
+        // ==================== CARRUSEL 3D ESTILO TARJETAS APILADAS ====================
+        (async function initStackedCarousel() {
+            // Funciones auxiliares
             function shuffle(arr) {
-                for (let i = arr.length - 1; i > 0; i--) {
+                const array = [...arr];
+                for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
-                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                    [array[i], array[j]] = [array[j], array[i]];
                 }
-                return arr;
+                return array;
             }
 
+            // Intentar cargar imágenes desde manifest.json
             async function tryManifest() {
                 try {
                     const res = await fetch('images/frames/manifest.json');
                     if (res.ok) {
                         const list = await res.json();
-                        if (Array.isArray(list) && list.length) return list.map(f => 'images/frames/' + f);
+                        if (Array.isArray(list) && list.length) {
+                            return list.map(f => 'images/frames/' + f);
+                        }
                     }
-                } catch (e) {}
+                } catch (e) {
+                    console.log('No manifest.json found');
+                }
                 return null;
             }
 
+            // Intentar obtener listado de directorio
             async function tryDirectoryListing() {
                 try {
                     const res = await fetch('images/frames/');
                     if (res.ok) {
                         const text = await res.text();
-                        const matches = [...text.matchAll(/href="([^\"]+\.(?:jpe?g|jpeg|jpg|png|webp|svg))"/gi)];
+                        const matches = [...text.matchAll(/href="([^\"]+\.(?:jpe?g|jpg))"/gi)];
                         const files = matches.map(m => m[1]).filter(Boolean);
-                        if (files.length) return files.map(f => (f.startsWith('http') ? f : 'images/frames/' + f.replace(/^\/+/, '').split('/').pop()));
+                        if (files.length) {
+                            return files.map(f => {
+                                if (f.startsWith('http')) return f;
+                                return 'images/frames/' + f.replace(/^\/+/, '').split('/').pop();
+                            });
+                        }
                     }
-                } catch (e) {}
+                } catch (e) {
+                    console.log('Directory listing failed');
+                }
                 return null;
             }
 
+            // Intentar encontrar imágenes numeradas
             async function tryNumbered() {
-                const exts = ['jpg','jpeg','png','webp','svg'];
                 const found = [];
-                for (let i = 1; i <= 30; i++) {
+                const exts = ['jpg', 'jpeg'];
+                
+                for (let i = 1; i <= 50; i++) {
                     for (const ext of exts) {
                         const url = `images/frames/frame-${i}.${ext}`;
                         try {
                             const r = await fetch(url, { method: 'HEAD' });
-                            if (r.ok) { found.push(url); break; }
+                            if (r.ok) {
+                                found.push(url);
+                                break;
+                            }
                         } catch (e) {}
                     }
-                    if (found.length >= 30) break;
+                    if (found.length >= 50) break;
                 }
+                
                 return found.length ? found : null;
             }
 
-            async function findFrameImages() {
-                let imgs = await tryManifest();
-                if (imgs && imgs.length) return imgs;
-                imgs = await tryDirectoryListing();
-                if (imgs && imgs.length) return imgs;
-                imgs = await tryNumbered();
-                if (imgs && imgs.length) return imgs;
-                return []; // no images found
+            // Intentar con nombres comunes
+            async function tryCommonNames() {
+                const found = [];
+                const exts = ['jpg', 'jpeg'];
+                const names = ['frame', 'image', 'photo', 'pic', 'img', '1', '2', '3', '4', '5'];
+                
+                for (const name of names) {
+                    for (const ext of exts) {
+                        const url = `images/frames/${name}.${ext}`;
+                        try {
+                            const r = await fetch(url, { method: 'HEAD' });
+                            if (r.ok) {
+                                found.push(url);
+                                break;
+                            }
+                        } catch (e) {}
+                    }
+                }
+                
+                return found.length ? found : null;
             }
 
-            const images = await findFrameImages();
-            const carouselTrack = document.querySelector('.carousel-track');
-            const viewport = document.querySelector('.carousel-viewport');
-            const prevBtn = document.querySelector('.carousel-btn.prev');
-            const nextBtn = document.querySelector('.carousel-btn.next');
+            // Buscar todas las imágenes disponibles
+            async function findAllImages() {
+                let imgs = await tryManifest();
+                if (imgs && imgs.length) return imgs;
+                
+                imgs = await tryDirectoryListing();
+                if (imgs && imgs.length) return imgs;
+                
+                imgs = await tryNumbered();
+                if (imgs && imgs.length) return imgs;
 
-            if (!carouselTrack || !viewport) return;
+                imgs = await tryCommonNames();
+                if (imgs && imgs.length) return imgs;
+                
+                return [];
+            }
 
-            if (!images || images.length === 0) {
-                // duplicar placeholder para buena experiencia visual
-                const placeholder = carouselTrack.querySelector('.carousel-item.placeholder');
-                if (placeholder) {
-                    for (let i = 0; i < 2; i++) {
-                        const clone = placeholder.cloneNode(true);
-                        carouselTrack.appendChild(clone);
-                    }
-                    // set states
-                    setTimeout(() => {
-                        const items = [...carouselTrack.children];
-                        items.forEach((it, idx) => it.classList.add(idx === 0 ? 'active' : 'right'));
-                    }, 50);
-                }
+            // Cargar imágenes
+            const allImages = await findAllImages();
+            
+            // Filtrar solo imágenes JPEG
+            const jpegImages = allImages.filter(src => /\.jpe?g$/i.test(src));
+            const imagesToUse = jpegImages.length > 0 ? jpegImages : allImages;
+
+            const container = document.getElementById('carouselContainer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (!container) return;
+
+            // Si no hay imágenes, mostrar placeholder
+            if (imagesToUse.length === 0) {
+                console.log('No se encontraron imágenes JPEG en images/frames/');
                 return;
             }
 
-            // prefer JPEG images when available
-            const jpegList = images.filter(s => /\.jpe?g$/i.test(s));
-            const pool = jpegList.length ? jpegList : images;
+            // Limpiar contenedor
+            container.innerHTML = '';
 
-            const chosen = shuffle(pool.slice()).slice(0, 3);
-            carouselTrack.innerHTML = '';
-            chosen.forEach(src => {
-                const item = document.createElement('div');
-                item.className = 'carousel-item';
+            // Crear slides para todas las imágenes
+            const slides = [];
+            imagesToUse.forEach((src, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                slide.dataset.index = index;
+
+                const inner = document.createElement('div');
+                inner.className = 'slide-inner';
+                
                 const img = document.createElement('img');
                 img.src = src;
-                img.alt = 'Marco personalizado';
+                img.alt = `Marco ${index + 1}`;
                 img.loading = 'lazy';
-                img.className = 'carousel-img';
-                img.addEventListener('error', () => { item.remove(); });
-                item.appendChild(img);
-                carouselTrack.appendChild(item);
-            });
 
-            function scrollToIndex(idx) {
-                const item = carouselTrack.children[idx];
-                if (!item) return;
-                const offset = item.offsetLeft - (viewport.clientWidth - item.clientWidth) / 2;
-                viewport.scrollTo({ left: offset, behavior: 'smooth' });
-            }
-
-            function getCenteredIndex() {
-                const children = [...carouselTrack.children];
-                const center = viewport.scrollLeft + viewport.clientWidth / 2;
-                let best = 0, bestDist = Infinity;
-                children.forEach((c, i) => {
-                    const cCenter = c.offsetLeft + c.clientWidth / 2;
-                    const d = Math.abs(cCenter - center);
-                    if (d < bestDist) { best = i; bestDist = d; }
+                img.addEventListener('error', () => {
+                    console.error(`Error loading image: ${src}`);
+                    slide.remove();
                 });
-                return best;
-            }
 
-            function updateStates() {
-                const children = [...carouselTrack.children];
-                if (!children.length) return;
-                const idx = getCenteredIndex();
-                children.forEach((c, i) => {
-                    c.classList.remove('active','left','right');
-                    if (i < idx) c.classList.add('left');
-                    else if (i > idx) c.classList.add('right');
-                    else c.classList.add('active');
+                inner.appendChild(img);
+                slide.appendChild(inner);
+                container.appendChild(slide);
+                slides.push(slide);
+            });
+
+            if (slides.length === 0) return;
+
+            let currentIndex = 0;
+
+            // Calcular y aplicar transformaciones 3D estilo tarjetas apiladas
+            function updateSlides() {
+                const total = slides.length;
+                
+                slides.forEach((slide, i) => {
+                    // Calcular posición relativa al slide actual
+                    let position = i - currentIndex;
+                    
+                    // Normalizar posición (circular)
+                    if (position < -Math.floor(total / 2)) {
+                        position += total;
+                    } else if (position > Math.ceil(total / 2)) {
+                        position -= total;
+                    }
+
+                    // Calcular transformaciones basadas en posición
+                    let translateX = 0;
+                    let translateZ = 0;
+                    let rotateY = 0;
+                    let scale = 1;
+                    let opacity = 1;
+                    let zIndex = 0;
+
+                    if (position === 0) {
+                        // Slide central (activo)
+                        translateX = 0;
+                        translateZ = 0;
+                        rotateY = 0;
+                        scale = 1;
+                        opacity = 1;
+                        zIndex = 50;
+                    } else if (position === -1) {
+                        // Slide a la izquierda
+                        translateX = -200;
+                        translateZ = -150;
+                        rotateY = 35;
+                        scale = 0.85;
+                        opacity = 0.7;
+                        zIndex = 40;
+                    } else if (position === 1) {
+                        // Slide a la derecha
+                        translateX = 200;
+                        translateZ = -150;
+                        rotateY = -35;
+                        scale = 0.85;
+                        opacity = 0.7;
+                        zIndex = 40;
+                    } else if (position === -2) {
+                        // Segundo slide a la izquierda
+                        translateX = -350;
+                        translateZ = -300;
+                        rotateY = 45;
+                        scale = 0.7;
+                        opacity = 0.4;
+                        zIndex = 30;
+                    } else if (position === 2) {
+                        // Segundo slide a la derecha
+                        translateX = 350;
+                        translateZ = -300;
+                        rotateY = -45;
+                        scale = 0.7;
+                        opacity = 0.4;
+                        zIndex = 30;
+                    } else {
+                        // Slides ocultos
+                        translateX = position > 0 ? 500 : -500;
+                        translateZ = -400;
+                        rotateY = position > 0 ? -55 : 55;
+                        scale = 0.5;
+                        opacity = 0;
+                        zIndex = 10;
+                    }
+
+                    // Aplicar transformaciones (ajustadas para layout centrado)
+                    slide.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+                    slide.style.opacity = opacity;
+                    slide.style.zIndex = zIndex;
                 });
-                prevBtn.disabled = idx === 0;
-                nextBtn.disabled = idx === children.length - 1;
             }
 
-            // inicial
-            setTimeout(() => { scrollToIndex(0); updateStates(); }, 150);
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateSlides();
+            }
 
-            prevBtn.addEventListener('click', () => {
-                const idx = getCenteredIndex();
-                scrollToIndex(Math.max(0, idx - 1));
-                setTimeout(updateStates, 300);
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                updateSlides();
+            }
+
+            // Event listeners
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+
+            // Click en slides para navegar
+            slides.forEach((slide, index) => {
+                slide.addEventListener('click', () => {
+                    const position = index - currentIndex;
+                    if (position === 1) {
+                        nextSlide();
+                    } else if (position === -1 || position === slides.length - 1) {
+                        prevSlide();
+                    }
+                });
             });
 
-            nextBtn.addEventListener('click', () => {
-                const idx = getCenteredIndex();
-                scrollToIndex(Math.min(carouselTrack.children.length - 1, idx + 1));
-                setTimeout(updateStates, 300);
-            });
-
-            // pointer drag (mouse & touch)
-            let isDown = false, startX = 0, scrollLeft = 0, activePointerId = null;
-            viewport.addEventListener('pointerdown', (e) => {
-                isDown = true;
-                activePointerId = e.pointerId;
-                viewport.setPointerCapture(activePointerId);
-                startX = e.clientX;
-                scrollLeft = viewport.scrollLeft;
-                viewport.classList.add('dragging');
-            });
-
-            viewport.addEventListener('pointermove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const dx = e.clientX - startX;
-                viewport.scrollLeft = scrollLeft - dx;
-            });
-
-            viewport.addEventListener('pointerup', (e) => {
-                if (!isDown) return;
-                isDown = false;
-                try { viewport.releasePointerCapture(activePointerId); } catch (err) {}
-                viewport.classList.remove('dragging');
-                setTimeout(() => { scrollToIndex(getCenteredIndex()); updateStates(); }, 120);
-            });
-
-            viewport.addEventListener('pointercancel', () => {
-                isDown = false;
-                viewport.classList.remove('dragging');
-                setTimeout(() => { scrollToIndex(getCenteredIndex()); updateStates(); }, 120);
-            });
-
-            // scroll debounce to update states
-            let scrollTimeout = null;
-            viewport.addEventListener('scroll', () => {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => updateStates(), 90);
-            });
-
-            // keyboard
+            // Navegación con teclado
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft') prevBtn.click();
-                if (e.key === 'ArrowRight') nextBtn.click();
+                if (e.key === 'ArrowLeft') prevSlide();
+                if (e.key === 'ArrowRight') nextSlide();
             });
+
+            // Auto-play
+            let autoplayInterval = setInterval(nextSlide, 3500);
+
+            // Pausar en hover
+            container.addEventListener('mouseenter', () => {
+                clearInterval(autoplayInterval);
+            });
+
+            container.addEventListener('mouseleave', () => {
+                autoplayInterval = setInterval(nextSlide, 3500);
+            });
+
+            // Inicializar
+            updateSlides();
         })();
     </script>
 </body>

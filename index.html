@@ -457,6 +457,113 @@
             background: linear-gradient(135deg, #F8D7DA 0%, #FFD3E1 100%);
         }
 
+        /* Carousel styles (Hero) */
+        .carousel {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .carousel-viewport {
+            overflow-x: auto;
+            overflow-y: hidden;
+            width: 100%;
+            max-width: 520px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: none; /* IE/Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .carousel-viewport::-webkit-scrollbar { display: none; }
+
+        .carousel-track {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 1rem 0;
+            scroll-behavior: smooth;
+            will-change: transform, scroll-position;
+        }
+
+        .carousel-item {
+            flex: 0 0 320px;
+            height: 420px;
+            border: 12px solid white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+            border-radius: 6px;
+            overflow: hidden;
+            scroll-snap-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            transition: transform 0.45s cubic-bezier(.22,.8,.35,1), box-shadow 0.25s ease;
+            transform-origin: center;
+        }
+
+        /* States: centered vs sides (inclinado) */
+        .carousel-item.left {
+            transform: rotate(-8deg) translateY(4px) scale(0.95);
+            z-index: 3;
+            filter: saturate(0.95) brightness(0.98);
+        }
+
+        .carousel-item.right {
+            transform: rotate(8deg) translateY(4px) scale(0.95);
+            z-index: 3;
+            filter: saturate(0.95) brightness(0.98);
+        }
+
+        .carousel-item.active {
+            transform: translateY(-6px) rotate(0deg) scale(1.03);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+            z-index: 5;
+        }
+
+        .carousel-item.placeholder .gallery-item-inner {
+            width:100%;
+            height:100%;
+            background: linear-gradient(135deg, #FFD3E1 0%, #FF6B9D 100%);
+            position: relative;
+        }
+
+        .carousel-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .carousel-btn {
+            background: rgba(0,0,0,0.06);
+            border: none;
+            padding: 0.45rem 0.8rem;
+            border-radius: 8px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--color-dark);
+            transition: background 0.2s ease;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .carousel-btn:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+
+        @media (max-width: 640px) {
+            .carousel-item { flex: 0 0 260px; height: 340px; border-width:10px; }
+            .carousel-viewport { max-width: 340px; }
+            .carousel-btn { font-size: 1.1rem; padding: 0.35rem 0.6rem; }
+        }
+
         /* Products Section */
         .products {
             padding: 6rem 5%;
@@ -818,14 +925,17 @@
                 <a href="#productos" class="cta-button">Regala Amor ♥</a>
             </div>
             <div class="hero-gallery">
-                <div class="gallery-item">
-                    <div class="gallery-item-inner"></div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-item-inner"></div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-item-inner"></div>
+                <div class="carousel" aria-roledescription="carousel" aria-label="Galería de marcos">
+                    <button class="carousel-btn prev" aria-label="Anterior">‹</button>
+                    <div class="carousel-viewport">
+                        <div class="carousel-track">
+                            <!-- Si no hay imágenes en images/frames se mostrará este placeholder con corazón -->
+                            <div class="carousel-item placeholder">
+                                <div class="gallery-item-inner"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn next" aria-label="Siguiente">›</button>
                 </div>
             </div>
         </div>
@@ -963,6 +1073,204 @@
             card.style.transition = `all 0.6s ease ${index * 0.2}s`;
             observer.observe(card);
         });
+
+        /* Carrusel en Hero: carga hasta 3 imágenes aleatorias desde images/frames (prefiriendo JPEG) */
+        (async function() {
+            function shuffle(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            async function tryManifest() {
+                try {
+                    const res = await fetch('images/frames/manifest.json');
+                    if (res.ok) {
+                        const list = await res.json();
+                        if (Array.isArray(list) && list.length) return list.map(f => 'images/frames/' + f);
+                    }
+                } catch (e) {}
+                return null;
+            }
+
+            async function tryDirectoryListing() {
+                try {
+                    const res = await fetch('images/frames/');
+                    if (res.ok) {
+                        const text = await res.text();
+                        const matches = [...text.matchAll(/href="([^\"]+\.(?:jpe?g|jpeg|jpg|png|webp|svg))"/gi)];
+                        const files = matches.map(m => m[1]).filter(Boolean);
+                        if (files.length) return files.map(f => (f.startsWith('http') ? f : 'images/frames/' + f.replace(/^\/+/, '').split('/').pop()));
+                    }
+                } catch (e) {}
+                return null;
+            }
+
+            async function tryNumbered() {
+                const exts = ['jpg','jpeg','png','webp','svg'];
+                const found = [];
+                for (let i = 1; i <= 30; i++) {
+                    for (const ext of exts) {
+                        const url = `images/frames/frame-${i}.${ext}`;
+                        try {
+                            const r = await fetch(url, { method: 'HEAD' });
+                            if (r.ok) { found.push(url); break; }
+                        } catch (e) {}
+                    }
+                    if (found.length >= 30) break;
+                }
+                return found.length ? found : null;
+            }
+
+            async function findFrameImages() {
+                let imgs = await tryManifest();
+                if (imgs && imgs.length) return imgs;
+                imgs = await tryDirectoryListing();
+                if (imgs && imgs.length) return imgs;
+                imgs = await tryNumbered();
+                if (imgs && imgs.length) return imgs;
+                return []; // no images found
+            }
+
+            const images = await findFrameImages();
+            const carouselTrack = document.querySelector('.carousel-track');
+            const viewport = document.querySelector('.carousel-viewport');
+            const prevBtn = document.querySelector('.carousel-btn.prev');
+            const nextBtn = document.querySelector('.carousel-btn.next');
+
+            if (!carouselTrack || !viewport) return;
+
+            if (!images || images.length === 0) {
+                // duplicar placeholder para buena experiencia visual
+                const placeholder = carouselTrack.querySelector('.carousel-item.placeholder');
+                if (placeholder) {
+                    for (let i = 0; i < 2; i++) {
+                        const clone = placeholder.cloneNode(true);
+                        carouselTrack.appendChild(clone);
+                    }
+                    // set states
+                    setTimeout(() => {
+                        const items = [...carouselTrack.children];
+                        items.forEach((it, idx) => it.classList.add(idx === 0 ? 'active' : 'right'));
+                    }, 50);
+                }
+                return;
+            }
+
+            // prefer JPEG images when available
+            const jpegList = images.filter(s => /\.jpe?g$/i.test(s));
+            const pool = jpegList.length ? jpegList : images;
+
+            const chosen = shuffle(pool.slice()).slice(0, 3);
+            carouselTrack.innerHTML = '';
+            chosen.forEach(src => {
+                const item = document.createElement('div');
+                item.className = 'carousel-item';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Marco personalizado';
+                img.loading = 'lazy';
+                img.className = 'carousel-img';
+                img.addEventListener('error', () => { item.remove(); });
+                item.appendChild(img);
+                carouselTrack.appendChild(item);
+            });
+
+            function scrollToIndex(idx) {
+                const item = carouselTrack.children[idx];
+                if (!item) return;
+                const offset = item.offsetLeft - (viewport.clientWidth - item.clientWidth) / 2;
+                viewport.scrollTo({ left: offset, behavior: 'smooth' });
+            }
+
+            function getCenteredIndex() {
+                const children = [...carouselTrack.children];
+                const center = viewport.scrollLeft + viewport.clientWidth / 2;
+                let best = 0, bestDist = Infinity;
+                children.forEach((c, i) => {
+                    const cCenter = c.offsetLeft + c.clientWidth / 2;
+                    const d = Math.abs(cCenter - center);
+                    if (d < bestDist) { best = i; bestDist = d; }
+                });
+                return best;
+            }
+
+            function updateStates() {
+                const children = [...carouselTrack.children];
+                if (!children.length) return;
+                const idx = getCenteredIndex();
+                children.forEach((c, i) => {
+                    c.classList.remove('active','left','right');
+                    if (i < idx) c.classList.add('left');
+                    else if (i > idx) c.classList.add('right');
+                    else c.classList.add('active');
+                });
+                prevBtn.disabled = idx === 0;
+                nextBtn.disabled = idx === children.length - 1;
+            }
+
+            // inicial
+            setTimeout(() => { scrollToIndex(0); updateStates(); }, 150);
+
+            prevBtn.addEventListener('click', () => {
+                const idx = getCenteredIndex();
+                scrollToIndex(Math.max(0, idx - 1));
+                setTimeout(updateStates, 300);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                const idx = getCenteredIndex();
+                scrollToIndex(Math.min(carouselTrack.children.length - 1, idx + 1));
+                setTimeout(updateStates, 300);
+            });
+
+            // pointer drag (mouse & touch)
+            let isDown = false, startX = 0, scrollLeft = 0, activePointerId = null;
+            viewport.addEventListener('pointerdown', (e) => {
+                isDown = true;
+                activePointerId = e.pointerId;
+                viewport.setPointerCapture(activePointerId);
+                startX = e.clientX;
+                scrollLeft = viewport.scrollLeft;
+                viewport.classList.add('dragging');
+            });
+
+            viewport.addEventListener('pointermove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const dx = e.clientX - startX;
+                viewport.scrollLeft = scrollLeft - dx;
+            });
+
+            viewport.addEventListener('pointerup', (e) => {
+                if (!isDown) return;
+                isDown = false;
+                try { viewport.releasePointerCapture(activePointerId); } catch (err) {}
+                viewport.classList.remove('dragging');
+                setTimeout(() => { scrollToIndex(getCenteredIndex()); updateStates(); }, 120);
+            });
+
+            viewport.addEventListener('pointercancel', () => {
+                isDown = false;
+                viewport.classList.remove('dragging');
+                setTimeout(() => { scrollToIndex(getCenteredIndex()); updateStates(); }, 120);
+            });
+
+            // scroll debounce to update states
+            let scrollTimeout = null;
+            viewport.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => updateStates(), 90);
+            });
+
+            // keyboard
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') prevBtn.click();
+                if (e.key === 'ArrowRight') nextBtn.click();
+            });
+        })();
     </script>
 </body>
 </html>

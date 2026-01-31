@@ -149,6 +149,47 @@
             width: 100%;
         }
 
+        /* Promo Banner */
+        .promo-banner {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #E63946, #FF6B9D);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            z-index: 999;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+            animation: slideDown 1s ease-out 0.5s both;
+            max-width: 480px;
+            width: auto;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .promo-banner .promo-text {
+            display: inline-block;
+        }
+
+        @media (max-width: 640px) {
+            .promo-banner {
+                top: 70px;
+                left: auto;
+                right: 20px;
+                transform: none;
+                width: calc(100% - 40px);
+                max-width: none;
+                padding: 0.6rem 1rem;
+                border-radius: 999px;
+                font-size: 0.9rem;
+                white-space: normal;
+                text-align: center;
+            }
+        }
+
         /* Hero Section */
         .hero {
             position: relative;
@@ -723,8 +764,8 @@
     </nav>
 
     <!-- Valentine's Promo Banner -->
-    <div style="position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #E63946, #FF6B9D); color: white; padding: 0.8rem 2rem; border-radius: 50px; z-index: 999; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3); animation: slideDown 1s ease-out 0.5s both;">
-        🌹 Especial San Valentín: 20% OFF en todos los cuadros personalizados ♥
+    <div class="promo-banner" role="status" aria-live="polite">
+        <span class="promo-text">🌹 Especial San Valentín: 20% OFF en todos los cuadros personalizados ♥</span>
     </div>
 
     <!-- Hero Section -->

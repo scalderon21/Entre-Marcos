@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuadros Personalizados - Arte a tu Medida</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cream: #FFF5F7;
+            --color-dark: #2C1810;
+            --color-accent: #E63946;
+            --color-accent-dark: #C1121F;
+            --color-gold: #FFB3C1;
+            --color-pastel-pink: #FFD3E1;
+            --color-pastel-lavender: #F8D7DA;
+            --color-rose: #FF6B9D;
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-cream);
+            color: var(--color-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Decorative background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -10%;
+            width: 80%;
+            height: 120%;
+            background: radial-gradient(circle at center, rgba(255, 179, 193, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        /* Additional hearts decoration */
+        body::after {
+            content: '♥';
+            position: fixed;
+            font-size: 200px;
+            color: rgba(230, 57, 70, 0.03);
+            top: 20%;
+            left: 5%;
+            pointer-events: none;
+            z-index: 0;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.03; }
+            50% { transform: scale(1.1); opacity: 0.05; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(2deg); }
+            66% { transform: translate(-20px, 20px) rotate(-2deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 245, 247, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(230, 57, 70, 0.2);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text {
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--color-dark);
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .accent {
+            color: var(--color-accent);
+            font-style: italic;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--color-accent);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.4s ease;
+            border: 2px solid var(--color-accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--color-accent-dark);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(196, 133, 111, 0.3);
+        }
+
+        .hero-gallery {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 550px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .gallery-item {
+            position: absolute;
+            width: 300px;
+            height: 400px;
+            overflow: hidden;
+            background: white;
+            transition: transform 0.5s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: 12px solid white;
+        }
+
+        .gallery-item-inner {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFD3E1 0%, #FF6B9D 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item:nth-child(1) {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-8deg);
+            z-index: 1;
+            animation: slideInLeft 1s ease-out 0.8s both;
+        }
+
+        .gallery-item:nth-child(2) {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0deg);
+            z-index: 3;
+            animation: slideInCenter 1s ease-out 1s both;
+        }
+
+        .gallery-item:nth-child(3) {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(8deg);
+            z-index: 2;
+            animation: slideInRight 1s ease-out 1.2s both;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translate(-120%, -50%) rotate(-15deg);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) rotate(-8deg);
+            }
+        }
+
+        @keyframes slideInCenter {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -120%) rotate(0deg) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translate(20%, -50%) rotate(15deg);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) rotate(8deg);
+            }
+        }
+
+        .gallery-item:hover {
+            transform: translate(-50%, -50%) rotate(0deg) scale(1.05) !important;
+            z-index: 10;
+        }
+
+        .gallery-item:nth-child(1):hover {
+            box-shadow: 0 20px 60px rgba(230, 57, 70, 0.4);
+        }
+
+        .gallery-item:nth-child(2):hover {
+            box-shadow: 0 20px 60px rgba(255, 107, 157, 0.4);
+        }
+
+        .gallery-item:nth-child(3):hover {
+            box-shadow: 0 20px 60px rgba(255, 211, 225, 0.4);
+        }
+
+        /* Placeholder images with artistic patterns */
+        .gallery-item-inner::after {
+            content: '♥';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem;
+            color: rgba(255, 255, 255, 0.2);
+            text-align: center;
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        .gallery-item:nth-child(1) .gallery-item-inner {
+            background: linear-gradient(135deg, #FFD3E1 0%, #FFB3C1 100%);
+        }
+
+        .gallery-item:nth-child(2) .gallery-item-inner {
+            background: linear-gradient(135deg, #FF6B9D 0%, #E63946 100%);
+        }
+
+        .gallery-item:nth-child(3) .gallery-item-inner {
+            background: linear-gradient(135deg, #F8D7DA 0%, #FFD3E1 100%);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 6rem 5%;
+            background: white;
+            position: relative;
+        }
+
+        .products::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--color-accent), var(--color-rose), var(--color-accent), transparent);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .product-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+        }
+
+        .product-card {
+            background: var(--color-cream);
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:nth-child(1)::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 211, 225, 0.08), transparent);
+            pointer-events: none;
+        }
+
+        .product-card:nth-child(2)::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.06), transparent);
+            pointer-events: none;
+        }
+
+        .product-card:nth-child(3)::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(230, 57, 70, 0.05), transparent);
+            pointer-events: none;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--color-accent);
+            transition: height 0.4s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .product-card:hover::before {
+            height: 100%;
+        }
+
+        .product-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+        }
+
+        .product-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features li {
+            padding: 0.5rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .product-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-weight: bold;
+        }
+
+        /* Social Section */
+        .social {
+            padding: 6rem 5%;
+            background: var(--color-dark);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 107, 157, 0.08) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .social-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .social h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .social p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: rgba(255,255,255,0.8);
+            font-weight: 300;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--color-accent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+
+        .social-link:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .social-link:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-3px);
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-cream);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(230, 57, 70, 0.2);
+        }
+
+        footer p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-gallery {
+                max-width: 400px;
+                height: 450px;
+                margin: 0 auto;
+            }
+
+            .gallery-item {
+                width: 240px;
+                height: 320px;
+            }
+
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                padding: 1rem 5%;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .hero {
+                padding: 6rem 5% 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-gallery {
+                max-width: 300px;
+                height: 350px;
+            }
+
+            .gallery-item {
+                width: 180px;
+                height: 240px;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .social h2 {
+                font-size: 2rem;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="#" class="logo">Cuadros Arte</a>
+            <ul class="nav-links">
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#redes">Redes Sociales</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Valentine's Promo Banner -->
+    <div style="position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #E63946, #FF6B9D); color: white; padding: 0.8rem 2rem; border-radius: 50px; z-index: 999; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3); animation: slideDown 1s ease-out 0.5s both;">
+        🌹 Especial San Valentín: 20% OFF en todos los cuadros personalizados ♥
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>El Regalo <span class="accent">Perfecto</span> para San Valentín</h1>
+                <p>Sorprende a tu pareja con un cuadro personalizado que captura sus momentos más especiales. Arte único hecho con amor, impresión premium y marcos elegantes que harán brillar su mirada.</p>
+                <a href="#productos" class="cta-button">Regala Amor ♥</a>
+            </div>
+            <div class="hero-gallery">
+                <div class="gallery-item">
+                    <div class="gallery-item-inner"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-item-inner"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-item-inner"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="productos" class="products">
+        <div class="section-header">
+            <h2>Regalos con Amor para San Valentín</h2>
+            <p>Cada cuadro cuenta una historia de amor. Sorprende con un regalo único que vivirá para siempre en su corazón y en sus paredes.</p>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <h3>Retratos Románticos</h3>
+                <p>Inmortalizan ese momento especial juntos. Desde su primera foto hasta su imagen favorita como pareja, convertida en arte inolvidable.</p>
+                <ul class="product-features">
+                    <li>Tu foto de pareja en arte premium</li>
+                    <li>Múltiples tamaños y estilos</li>
+                    <li>Acabado mate o brillante</li>
+                    <li>Marco elegante incluido</li>
+                </ul>
+            </div>
+            <div class="product-card">
+                <h3>Mapas de Estrellas Personalizados</h3>
+                <p>El cielo exacto de su noche especial: su primer beso, su aniversario, o ese momento que los unió para siempre.</p>
+                <ul class="product-features">
+                    <li>Mapa estelar de tu fecha especial</li>
+                    <li>Personalizado con nombres y mensaje</li>
+                    <li>Diseño minimalista y elegante</li>
+                    <li>El regalo más romántico</li>
+                </ul>
+            </div>
+            <div class="product-card">
+                <h3>Sets de Amor</h3>
+                <p>Dos o tres cuadros que cuentan su historia: el antes, el ahora y el siempre. Un regalo que crece con su amor.</p>
+                <ul class="product-features">
+                    <li>Sets coordinados para parejas</li>
+                    <li>2 o 3 cuadros complementarios</li>
+                    <li>Opción de línea de tiempo</li>
+                    <li>Descuento especial San Valentín</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Section -->
+    <section id="redes" class="social">
+        <div class="social-content">
+            <h2>Síguenos en Redes Sociales</h2>
+            <p>Descubre nuestras últimas creaciones, inspiración diaria y ofertas exclusivas.</p>
+            <div class="social-links">
+                <a href="https://instagram.com" target="_blank" class="social-link" rel="noopener noreferrer">
+                    <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    Instagram
+                </a>
+                <a href="https://facebook.com" target="_blank" class="social-link" rel="noopener noreferrer">
+                    <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                    Facebook
+                </a>
+                <a href="https://pinterest.com" target="_blank" class="social-link" rel="noopener noreferrer">
+                    <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/>
+                    </svg>
+                    Pinterest
+                </a>
+                <a href="https://wa.me/56912345678" target="_blank" class="social-link" rel="noopener noreferrer">
+                    <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                    WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Cuadros Arte. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        let lastScroll = 0;
+        const nav = document.querySelector('nav');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                nav.style.boxShadow = 'none';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.product-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `all 0.6s ease ${index * 0.2}s`;
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

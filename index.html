@@ -106,12 +106,34 @@
         }
 
         .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+        }
+
+        .logo-text {
             font-family: var(--font-display);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--color-dark);
-            text-decoration: none;
             letter-spacing: -0.5px;
+        }
+
+        .logo-img {
+            display: block;
+            height: 44px;
+            width: auto;
+        }
+
+        @media (max-width: 640px) {
+            .logo-img {
+                height: 34px;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
         }
 
         .nav-links {
@@ -771,7 +793,10 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-content">
-            <a href="#" class="logo">Entremarcos</a>
+            <a href="#" class="logo" aria-label="Entremarcos - Inicio">
+                <img src="images/logo.svg" alt="Logo Entremarcos" class="logo-img">
+                <span class="logo-text">Entremarcos</span>
+            </a>
             <ul class="nav-links">
                 <li><a href="#productos">Productos</a></li>
                 <li><a href="#redes">Redes Sociales</a></li>

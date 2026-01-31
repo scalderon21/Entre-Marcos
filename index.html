@@ -151,42 +151,58 @@
 
         /* Promo Banner */
         .promo-banner {
-            position: fixed;
-            top: 80px;
-            left: 50%;
-            transform: translateX(-50%);
+            position: sticky;
+            top: 80px; /* sits below fixed nav */
+            left: 0;
+            transform: none;
             background: linear-gradient(135deg, #E63946, #FF6B9D);
             color: white;
             padding: 0.8rem 2rem;
-            border-radius: 50px;
-            z-index: 999;
+            border-radius: 0 0 8px 8px;
+            z-index: 999; /* under nav (nav z-index:1000) */
             font-weight: 600;
             font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
-            animation: slideDown 1s ease-out 0.5s both;
-            max-width: 480px;
-            width: auto;
-            display: inline-block;
-            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.15);
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .promo-banner .promo-text {
             display: inline-block;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 1rem;
+            text-align: center;
+            white-space: normal;
         }
 
+        /* Desktop: centered pill */
+        @media (min-width: 641px) {
+            .promo-banner {
+                position: sticky;
+                top: 80px;
+                width: auto;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 50px;
+                padding: 0.8rem 2rem;
+                max-width: 480px;
+            }
+        }
+
+        /* Mobile adjustments */
         @media (max-width: 640px) {
             .promo-banner {
-                top: 70px;
-                left: auto;
-                right: 20px;
-                transform: none;
-                width: calc(100% - 40px);
-                max-width: none;
+                top: 64px; /* below nav on small screens */
+                border-radius: 0;
                 padding: 0.6rem 1rem;
-                border-radius: 999px;
-                font-size: 0.9rem;
-                white-space: normal;
-                text-align: center;
+                box-shadow: none;
+            }
+
+            .promo-banner .promo-text {
+                font-size: 0.95rem;
             }
         }
 

@@ -21,6 +21,7 @@
             <ul class="nav-links">
                 <li><a href="#productos">Productos</a></li>
                 <li><a href="#redes">Redes Sociales</a></li>
+                <li><a href="plain.html" class="nav-redirect">Ir a Inicio</a></li>
             </ul>
         </div>
     </nav>
@@ -89,6 +90,40 @@
                     <li>Regalos personalizados para toda ocasión</li>
                     <li>Personaliza con nombres y mensajes</li>
                     <li>Empaque para regalo disponible</li>
+                </ul>
+            </div>
+            <div class="product-card">
+                <h3>Proceso de compra</h3>
+                <ol>
+                    <li>Contáctenos a través de nuestras redes sociales o correo electrónico.</li>
+                    <li>Envíe la imagen y la información a personalizar (títulos, fechas, dedicatorias).</li>
+                    <li>Realice el pago del adelanto de $5.000 o el monto total para confirmar el pedido.</li>
+                    <li>Le enviaremos una propuesta de diseño para su aprobación.</li>
+                    <li>Tras su aprobación, imprimiremos y enmarcaremos el cuadro.</li>
+                    <li>Coordinaremos la entrega en la estación de metro seleccionada.</li>
+                </ol>
+            </div>
+            <div class="product-card" id="personaliza">
+                <h3>Que puedes personalizar:</h3>
+                <ol>
+                    <li>Título</li>
+                    <li>Foto</li>
+                    <li>Fecha importante</li>
+                    <li>Dedicatoria (canción)</li>
+                    <li>Frase final</li>
+                </ol>
+            </div>
+            <div class="product-card" id="productos">
+                <h3>Productos</h3>
+                <p>Foto del cuadro 30x40</p>
+                <p>Precio: <strong>12.000</strong></p>
+                <p>Incluye marco negro con vidrio, poster</p>
+            </div>
+            <div class="product-card" id="envios">
+                <h3>Envios y pagos</h3>
+                <ul>
+                    <li>Se entrega en estaciones de metro</li>
+                    <li>Medios de pago: transferencia</li>
                 </ul>
             </div>
         </div>
@@ -187,7 +222,7 @@
             observer.observe(card);
         });
 
-        // ==================== CARRUSEL 3D ESTILO TARJETAS APILADAS ====================
+        /* CARRUSEL INICIAL COMENTADO - externalizado
         (async function initStackedCarousel() {
             // Funciones auxiliares
             function shuffle(arr) {
@@ -475,7 +510,8 @@
             // Iniciar autoplay y slide inicial
             updateSlides();
             startAutoplay();
-        })();
+        })(); */
     </script>
+    <script src="/inline-carousel.js"></script>
 </body>
 </html>

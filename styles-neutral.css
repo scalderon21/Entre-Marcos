@@ -1,0 +1,53 @@
+/* Neutral palette overrides for plain.html
+   Palette provided by user:
+   - #22223B (dark)
+   - #4A4E69
+   - #9A8C98
+   - #C9ADA7
+   - #F2E9E4 (light)
+*/
+:root {
+    --color-cream: #F2E9E4;
+    --color-dark: #22223B;
+    --color-accent: #4A4E69;
+    --color-accent-dark: #9A8C98;
+    --color-gold: #C9ADA7;
+    --color-pastel-pink: #C9ADA7; /* repurposed */
+    --color-pastel-lavender: #9A8C98;
+    --color-rose: #4A4E69;
+}
+
+/* Disable Valentine's decorative heart */
+body::after { display: none !important; content: none !important; }
+
+/* Subtle change to background decoration */
+body::before {
+    background: radial-gradient(circle at center, rgba(206, 190, 183, 0.08) 0%, transparent 60%);
+}
+
+/* Accent adjustments */
+.cta-button { background: var(--color-accent); border-color: var(--color-accent); }
+.cta-button::before { background: var(--color-accent-dark); }
+
+/* Slightly darker nav on neutral page */
+nav { background: rgba(34, 34, 59, 0.96); color: var(--color-cream); }
+nav .logo-text, .nav-links a { color: var(--color-cream); }
+nav .nav-links a::after { background: var(--color-accent); }
+
+/* Product cards: softened background to the light tone */
+.product-card { background: var(--color-cream); }
+
+/* Headings color */
+.section-header h2, .hero h1 { color: var(--color-dark); }
+
+/* Ensure hero paragraph contrasts well */
+.hero p { color: rgba(34,34,59,0.85); }
+
+/* Tweak button hover */
+.carousel-nav button { border-color: var(--color-accent); color: var(--color-accent); }
+.carousel-nav button:hover { background: var(--color-accent); color: var(--color-cream); }
+
+/* Small responsive tweak: ensure sticky top guidance matches main styles */
+@media (max-width: 640px) {
+    nav { padding: 1rem 4%; }
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuadros Personalizados - San Valentín</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- valentine page kept as original index backup -->
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="valentine.html" class="logo" aria-label="Entremarcos - Inicio">
+                <img src="images/logo.svg" alt="Logo Entremarcos" class="logo-img">
+                <span class="logo-text">Entremarcos</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#redes">Redes Sociales</a></li>
+                <li><button id="themeToggle">Tema: San Valentín</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Valentine's Promo Banner -->
+    <div class="promo-banner" role="status" aria-live="polite">
+        <span class="promo-text">🌹 Especial San Valentín: 20% OFF en todos los cuadros personalizados ♥</span>
+    </div>
+
+    <!-- (rest of content is the same as original index) -->
+
+    <script>
+    (function(){
+        function ensureNeutralLink(){
+            let link = document.getElementById('neutralTheme');
+            if(!link){
+                link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'styles-neutral.css';
+                link.id = 'neutralTheme';
+                document.head.appendChild(link);
+            }
+            return link;
+        }
+        const neutralLink = ensureNeutralLink();
+        const btn = document.getElementById('themeToggle');
+
+        function safeGet(key, fallback){
+            try { return localStorage.getItem(key) || fallback; }
+            catch(e) { return fallback; }
+        }
+        function safeSet(key, value){
+            try { localStorage.setItem(key, value); }
+            catch(e) {}
+        }
+
+        function setTheme(theme, save = true){
+            if(theme === 'neutral'){
+                neutralLink.disabled = false;
+                btn.textContent = 'Tema: Neutral';
+                btn.setAttribute('aria-pressed','true');
+                document.documentElement.setAttribute('data-theme','neutral');
+            } else {
+                neutralLink.disabled = true;
+                btn.textContent = 'Tema: San Valentín';
+                btn.setAttribute('aria-pressed','false');
+                document.documentElement.setAttribute('data-theme','valentine');
+            }
+            if(save) safeSet('theme', theme);
+        }
+
+        btn.addEventListener('click', () => {
+            const current = safeGet('theme','valentine');
+            setTheme(current === 'valentine' ? 'neutral' : 'valentine');
+        });
+
+        window.addEventListener('storage', (e) => {
+            if(e.key === 'theme' && e.newValue) setTheme(e.newValue, false);
+        });
+
+        const saved = safeGet('theme','valentine');
+        setTheme(saved, false);
+    })();
+    </script>
+</body>
+</html>

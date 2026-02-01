@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuadros Personalizados - Versión Neutral</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-neutral.css" id="neutralTheme">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="plain.html" class="logo" aria-label="Entremarcos - Inicio">
+                <img src="images/logo.svg" alt="Logo Entremarcos" class="logo-img">
+                <span class="logo-text">Entremarcos</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#como">Paso a Paso</a></li>
+                <li><a href="#personaliza">Personaliza</a></li>
+                <li><a href="#envios">Envios y Pagos</a></li>
+                <li><button id="themeToggle" class="theme-toggle" aria-pressed="true">Tema: Neutral</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section (neutral) -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Cuadros <span class="accent">Personalizados</span></h1>
+                <p>Arte a tu medida: convierte tus recuerdos en piezas impresas y enmarcadas con acabados profesionales y envío a estaciones de metro.</p>
+                <a href="#productos" class="cta-button">Ver Productos</a>
+
+                <div class="hero-gallery">
+                    <div class="carousel-3d">
+                        <div class="carousel-container" id="carouselContainer">
+                            <div class="carousel-slide placeholder">♥</div>
+                        </div>
+                        <div class="carousel-nav">
+                            <button id="prevBtn" aria-label="Anterior">‹</button>
+                            <button id="nextBtn" aria-label="Siguiente">›</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Paso a Paso -->
+    <section id="como" class="products">
+        <div class="section-header">
+            <h2>Paso a paso de tu compra</h2>
+            <p>Proceso claro para que tu cuadro llegue tal como lo imaginas.</p>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <ol>
+                    <li>Nos contactas por redes</li>
+                    <li>Nos envías la info personalizable</li>
+                    <li>Abono de 5mil o total de la compra para confirmar</li>
+                    <li>Diseñamos tu cuadro</li>
+                    <li>Te lo mostramos antes de imprimir</li>
+                    <li>Lo preparamos y coordinamos entrega (en metros)</li>
+                </ol>
+            </div>
+
+            <div class="product-card" id="personaliza">
+                <h3>Que puedes personalizar:</h3>
+                <ol>
+                    <li>Título</li>
+                    <li>Foto</li>
+                    <li>Fecha importante</li>
+                    <li>Dedicatoria (canción)</li>
+                    <li>Frase final</li>
+                </ol>
+            </div>
+
+            <div class="product-card" id="productos">
+                <h3>Productos</h3>
+                <p>Foto del cuadro 30x40</p>
+                <p>Precio: <strong>12.000</strong></p>
+                <p>Incluye marco negro con vidrio, poster</p>
+            </div>
+
+            <div class="product-card" id="envios">
+                <h3>Envios y pagos</h3>
+                <ul>
+                    <li>Se entrega en estaciones de metro</li>
+                    <li>Medios de pago: transferencia</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Entremarcos. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="/inline-carousel.js"></script>
+
+    <!-- Theme toggle script: toggles neutral stylesheet on/off and persists choice -->
+    <script>
+    (function(){
+        function ensureNeutralLink(){
+            let link = document.getElementById('neutralTheme');
+            if(!link){
+                link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'styles-neutral.css';
+                link.id = 'neutralTheme';
+                document.head.appendChild(link);
+            }
+            return link;
+        }
+        const neutralLink = ensureNeutralLink();
+        const btn = document.getElementById('themeToggle');
+
+        function safeGet(key, fallback){
+            try { return localStorage.getItem(key) || fallback; }
+            catch(e) { return fallback; }
+        }
+        function safeSet(key, value){
+            try { localStorage.setItem(key, value); }
+            catch(e) {}
+        }
+
+        function setTheme(theme, save = true){
+            if(theme === 'valentine'){
+                neutralLink.disabled = true;
+                btn.textContent = 'Tema: San Valentín';
+                btn.setAttribute('aria-pressed','false');
+                document.documentElement.setAttribute('data-theme','valentine');
+            } else {
+                neutralLink.disabled = false;
+                btn.textContent = 'Tema: Neutral';
+                btn.setAttribute('aria-pressed','true');
+                document.documentElement.setAttribute('data-theme','neutral');
+            }
+            if(save) safeSet('theme', theme);
+        }
+
+        btn.addEventListener('click', () => {
+            const current = safeGet('theme', 'neutral');
+            setTheme(current === 'neutral' ? 'valentine' : 'neutral');
+        });
+
+        window.addEventListener('storage', (e) => {
+            if(e.key === 'theme' && e.newValue) setTheme(e.newValue, false);
+        });
+
+        // Apply saved theme on load (do not overwrite storage)
+        const saved = safeGet('theme', 'neutral');
+        setTheme(saved, false);
+    })();
+    </script>
+</body>
+</html>

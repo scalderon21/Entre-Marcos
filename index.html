@@ -7,655 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-cream: #FFF5F7;
-            --color-dark: #2C1810;
-            --color-accent: #E63946;
-            --color-accent-dark: #C1121F;
-            --color-gold: #FFB3C1;
-            --color-pastel-pink: #FFD3E1;
-            --color-pastel-lavender: #F8D7DA;
-            --color-rose: #FF6B9D;
-            --font-display: 'Playfair Display', serif;
-            --font-body: 'Lato', sans-serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background: var(--color-cream);
-            color: var(--color-dark);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* Decorative background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            right: -10%;
-            width: 80%;
-            height: 120%;
-            background: radial-gradient(circle at center, rgba(255, 179, 193, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        /* Additional hearts decoration */
-        body::after {
-            content: '♥';
-            position: fixed;
-            font-size: 200px;
-            color: rgba(230, 57, 70, 0.03);
-            top: 20%;
-            left: 5%;
-            pointer-events: none;
-            z-index: 0;
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.03; }
-            50% { transform: scale(1.1); opacity: 0.05; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(2deg); }
-            66% { transform: translate(-20px, 20px) rotate(-2deg); }
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 245, 247, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 5%;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(230, 57, 70, 0.2);
-            animation: slideDown 0.8s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .nav-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            text-decoration: none;
-        }
-
-        .logo-text {
-            font-family: var(--font-display);
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--color-dark);
-            letter-spacing: -0.5px;
-        }
-
-        .logo-img {
-            display: block;
-            height: 44px;
-            width: auto;
-        }
-
-        @media (max-width: 640px) {
-            .logo-img {
-                height: 34px;
-            }
-
-            .logo-text {
-                font-size: 1.2rem;
-            }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--color-dark);
-            text-decoration: none;
-            font-weight: 400;
-            font-size: 0.95rem;
-            letter-spacing: 0.3px;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--color-accent);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--color-accent);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Promo Banner */
-        .promo-banner {
-            position: sticky;
-            top: 80px;
-            left: 0;
-            transform: none;
-            background: linear-gradient(135deg, #E63946, #FF6B9D);
-            color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 0 0 8px 8px;
-            z-index: 999;
-            font-weight: 600;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.15);
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .promo-banner .promo-text {
-            display: inline-block;
-            max-width: 1200px;
-            width: 100%;
-            padding: 0 1rem;
-            text-align: center;
-            white-space: normal;
-        }
-
-        @media (min-width: 641px) {
-            .promo-banner {
-                position: sticky;
-                top: 80px;
-                width: auto;
-                left: 50%;
-                transform: translateX(-50%);
-                border-radius: 50px;
-                padding: 0.8rem 2rem;
-                max-width: 480px;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .promo-banner {
-                top: 64px;
-                border-radius: 0;
-                padding: 0.6rem 1rem;
-                box-shadow: none;
-            }
-
-            .promo-banner .promo-text {
-                font-size: 0.95rem;
-            }
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 8rem 5% 4rem;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 1100px;
-            margin: 0 auto;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr; /* stacked: text first, gallery below */
-            gap: 2rem;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-text {
-            text-align: center; /* center heading, paragraph and button */
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .hero-gallery {
-            margin-top: 1.75rem;
-            display: flex;
-            justify-content: center;
-        }
-
-        .hero-text {
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero h1 {
-            font-family: var(--font-display);
-            font-size: 4.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: var(--color-dark);
-            letter-spacing: -1px;
-        }
-
-        .hero h1 .accent {
-            color: var(--color-accent);
-            font-style: italic;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 2.5rem;
-            font-weight: 300;
-            line-height: 1.8;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1.2rem 3rem;
-            background: var(--color-accent);
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: all 0.4s ease;
-            border: 2px solid var(--color-accent);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: var(--color-accent-dark);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-            z-index: -1;
-        }
-
-        .cta-button:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(196, 133, 111, 0.3);
-        }
-
-        /* Carrusel 3D Estilo Tarjetas Apiladas (ajustado para flujo y centrado) */
-        .hero-gallery {
-            position: relative;
-            width: 100%;
-            height: auto; /* let content determine height */
-            animation: fadeInUp 1s ease-out 0.6s both;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem 0 0; /* space from CTA */
-        }
-
-        .carousel-3d {
-            position: relative;
-            width: 100%;
-            max-width: 760px;
-            height: auto;
-            perspective: 1400px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            height: auto;
-            min-height: 0; /* allow slides to define height via aspect-ratio */
-            transform-style: preserve-3d;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .carousel-slide {
-            position: relative;
-            width: clamp(220px, 28vw, 360px);
-            aspect-ratio: 4 / 5; /* keep consistent frame ratio */
-            margin: 0 12px;
-            background: #000; /* black frame background */
-            border: 5px solid #000; /* thinner black frame */
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.16);
-            transition: all 0.45s cubic-bezier(0.22, 0.8, 0.35, 1);
-            transform-style: preserve-3d;
-            cursor: pointer;
-            will-change: transform, opacity;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* inner wrapper to control padding and contain image */
-        .slide-inner {
-            width: calc(100% - 12px);
-            height: calc(100% - 12px);
-            background: #fff; /* white interior to avoid black letterbox */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 6px; /* small gap between frame and image */
-            box-sizing: border-box;
-        }
-
-        .slide-inner img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; /* show whole photo scaled */
-            display: block;
-            background: transparent;
-        }
-
-        .carousel-slide.placeholder {
-            background: linear-gradient(135deg, #FFD3E1 0%, #FF6B9D 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 8rem;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Botones de navegación */
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
-            transform: translateY(-50%);
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        .carousel-nav button {
-            pointer-events: all;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.95);
-            border: 2px solid var(--color-accent);
-            color: var(--color-accent);
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .carousel-nav button:hover {
-            background: var(--color-accent);
-            color: white;
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.3);
-        }
-
-        .carousel-nav button:active {
-            transform: scale(0.95);
-        }
-
-        /* Products Section */
-        .products {
-            padding: 6rem 5%;
-            background: white;
-            position: relative;
-        }
-
-        .products::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--color-accent), var(--color-rose), var(--color-accent), transparent);
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-        }
-
-        .section-header h2 {
-            font-family: var(--font-display);
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--color-dark);
-        }
-
-        .section-header p {
-            font-size: 1.1rem;
-            color: #666;
-            font-weight: 300;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .product-card {
-            background: var(--color-cream);
-            padding: 2.5rem;
-            border-radius: 12px;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(230, 57, 70, 0.1);
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.15);
-        }
-
-        .product-card h3 {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--color-dark);
-        }
-
-        .product-card p {
-            color: #666;
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-        }
-
-        .product-features {
-            list-style: none;
-            padding: 0;
-        }
-
-        .product-features li {
-            padding: 0.6rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-            color: #555;
-        }
-
-        .product-features li::before {
-            content: '♥';
-            position: absolute;
-            left: 0;
-            color: var(--color-accent);
-            font-size: 0.9rem;
-        }
-
-        /* Social Section */
-        .social {
-            padding: 6rem 5%;
-            background: linear-gradient(135deg, var(--color-pastel-pink) 0%, var(--color-pastel-lavender) 100%);
-            text-align: center;
-        }
-
-        .social-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .social h2 {
-            font-family: var(--font-display);
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--color-dark);
-        }
-
-        .social p {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 3rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 1rem 2rem;
-            background: white;
-            color: var(--color-dark);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .social-link:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(230, 57, 70, 0.2);
-            background: var(--color-accent);
-            color: white;
-        }
-
-        .social-icon {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--color-dark);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 968px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-
-            .hero h1 { font-size: 3rem; }
-
-            .hero-gallery { padding-top: 1rem; }
-
-            .carousel-3d { max-width: 620px; }
-
-            .carousel-slide {
-                width: clamp(200px, 36vw, 320px);
-                aspect-ratio: 4 / 5;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .hero { padding: 6rem 5% 3rem; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { font-size: 1rem; }
-
-            .hero-gallery { padding-top: 0.75rem; }
-
-            .carousel-3d { max-width: 360px; }
-
-            .carousel-slide {
-                width: clamp(180px, 66vw, 260px);
-                aspect-ratio: 4 / 5;
-                border-width: 4px;
-            }
-
-            .carousel-nav button { width: 40px; height: 40px; font-size: 1.2rem; }
-            .carousel-nav { padding: 0 10px; }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Styles moved to styles.css -->
 </head>
 <body>
     <!-- Navigation -->
@@ -716,8 +69,8 @@
                 <p>Inmortalizan ese momento especial juntos. Desde su primera foto hasta su imagen favorita como pareja, convertida en arte inolvidable.</p>
                 <ul class="product-features">
                     <li>Tu foto de pareja en arte premium</li>
-                    <li>Múltiples tamaños y estilos</li>
-                    <li>Acabado mate o brillante</li>
+                    <li>Múltiples estilos</li>
+                    <li>Acabado brillante</li>
                     <li>Marco elegante incluido</li>
                 </ul>
             </div>
@@ -727,16 +80,13 @@
                 <ul class="product-features">
                     <li>Retrato de tu mascota a partir de una foto</li>
                     <li>Personalizable con nombre, fechas y mensaje</li>
-                    <li>Opción de añadir huella o silueta</li>
-                    <li>Disponible en varios tamaños y marcos</li>
                 </ul>
             </div>
             <div class="product-card">
                 <h3>Enmarca tu cariño</h3>
-                <p>Regalos personalizados para toda ocasión: cuadros y marcos diseñados para convertir tus recuerdos en obsequios únicos para cumpleaños, aniversarios o simplemente porque sí.</p>
+                <p>Regalos personalizados para toda ocasión: cuadros diseñados para convertir tus recuerdos en obsequios únicos para cumpleaños, aniversarios o simplemente porque sí.</p>
                 <ul class="product-features">
                     <li>Regalos personalizados para toda ocasión</li>
-                    <li>Opciones de tamaño y acabado</li>
                     <li>Personaliza con nombres y mensajes</li>
                     <li>Empaque para regalo disponible</li>
                 </ul>
@@ -966,15 +316,28 @@
                 return;
             }
 
-            // Limpiar contenedor
+            // Limpiar contenedor y preparar selección (máx 4 imágenes)
             container.innerHTML = '';
+            container.style.position = 'relative';
+            container.style.minHeight = '340px';
 
-            // Crear slides para todas las imágenes
+            // Seleccionar un número impar de imágenes (preferente 5, si no 3) para mantener simetría
+            let desiredCount = imagesToUse.length >= 5 ? 5 : (imagesToUse.length >= 3 ? 3 : imagesToUse.length);
+            if (desiredCount % 2 === 0) desiredCount = Math.max(1, desiredCount - 1);
+            const selected = shuffle(imagesToUse).slice(0, Math.min(desiredCount, imagesToUse.length));
+
+            // Crear slides para las imágenes seleccionadas
             const slides = [];
-            imagesToUse.forEach((src, index) => {
+            selected.forEach((src, index) => {
                 const slide = document.createElement('div');
                 slide.className = 'carousel-slide';
                 slide.dataset.index = index;
+
+                // Posicionamiento absoluto para centrado preciso
+                slide.style.position = 'absolute';
+                slide.style.top = '50%';
+                slide.style.left = '50%';
+                slide.style.transform = 'translate(-50%, -50%)';
 
                 const inner = document.createElement('div');
                 inner.className = 'slide-inner';
@@ -998,84 +361,65 @@
             if (slides.length === 0) return;
 
             let currentIndex = 0;
+            let autoplayInterval = null;
 
-            // Calcular y aplicar transformaciones 3D estilo tarjetas apiladas
+            function clamp(val, min, max) {
+                return Math.max(min, Math.min(max, val));
+            }
+
+            // Actualizar transformaciones con centrado robusto y rango de visibilidad simétrico
             function updateSlides() {
                 const total = slides.length;
-                
-                slides.forEach((slide, i) => {
-                    // Calcular posición relativa al slide actual
-                    let position = i - currentIndex;
-                    
-                    // Normalizar posición (circular)
-                    if (position < -Math.floor(total / 2)) {
-                        position += total;
-                    } else if (position > Math.ceil(total / 2)) {
-                        position -= total;
-                    }
+                if (!total) return;
 
-                    // Calcular transformaciones basadas en posición
-                    let translateX = 0;
-                    let translateZ = 0;
+                // Medir ancho de slide para calcular pasos
+                const sample = slides[0].getBoundingClientRect();
+                const slideW = sample.width || slides[0].offsetWidth || 260;
+                const overlapFactor = clamp(0.58, 0.45, 0.7);
+                const step = slideW * overlapFactor;
+
+                // Solo mostrar el centro y un vecino a cada lado (rango visible = 1)
+                const visibleRange = 1;
+
+                slides.forEach((slide, i) => {
+                    // Posición relativa al slide actual (circular)
+                    let pos = i - currentIndex;
+                    if (pos < -Math.floor(total / 2)) pos += total;
+                    if (pos > Math.floor(total / 2)) pos -= total;
+
+                    // Parámetros por defecto
+                    let offsetX = 0;
+                    let tz = 0;
                     let rotateY = 0;
                     let scale = 1;
                     let opacity = 1;
-                    let zIndex = 0;
+                    let z = 0;
 
-                    if (position === 0) {
-                        // Slide central (activo)
-                        translateX = 0;
-                        translateZ = 0;
-                        rotateY = 0;
-                        scale = 1;
-                        opacity = 1;
-                        zIndex = 50;
-                    } else if (position === -1) {
-                        // Slide a la izquierda
-                        translateX = -200;
-                        translateZ = -150;
-                        rotateY = 35;
-                        scale = 0.85;
-                        opacity = 0.7;
-                        zIndex = 40;
-                    } else if (position === 1) {
-                        // Slide a la derecha
-                        translateX = 200;
-                        translateZ = -150;
-                        rotateY = -35;
-                        scale = 0.85;
-                        opacity = 0.7;
-                        zIndex = 40;
-                    } else if (position === -2) {
-                        // Segundo slide a la izquierda
-                        translateX = -350;
-                        translateZ = -300;
-                        rotateY = 45;
-                        scale = 0.7;
-                        opacity = 0.4;
-                        zIndex = 30;
-                    } else if (position === 2) {
-                        // Segundo slide a la derecha
-                        translateX = 350;
-                        translateZ = -300;
-                        rotateY = -45;
-                        scale = 0.7;
-                        opacity = 0.4;
-                        zIndex = 30;
+                    if (Math.abs(pos) <= visibleRange) {
+                        // Visible: centro (0) o vecinos (-1, 1)
+                        offsetX = pos * step;
+                        tz = pos === 0 ? 0 : -180;
+                        rotateY = -pos * 30; // izquierda = 30, derecha = -30
+                        scale = pos === 0 ? 1 : 0.86;
+                        opacity = pos === 0 ? 1 : 0.95;
+                        z = pos === 0 ? 100 : 90;
+                        slide.style.pointerEvents = 'auto';
                     } else {
-                        // Slides ocultos
-                        translateX = position > 0 ? 500 : -500;
-                        translateZ = -400;
-                        rotateY = position > 0 ? -55 : 55;
+                        // Fuera del rango visible: invisibles y empujadas fuera de la vista
+                        offsetX = pos > 0 ? step * 3.2 : -step * 3.2;
+                        tz = -600;
+                        rotateY = pos > 0 ? -55 : 55;
                         scale = 0.5;
-                        opacity = 0;
-                        zIndex = 10;
+                        opacity = 0; // completamente invisible
+                        z = 10;
+                        slide.style.pointerEvents = 'none';
                     }
 
-                    // Aplicar transformaciones (ajustadas para layout centrado)
-                    slide.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+                    slide.style.transition = 'transform 600ms cubic-bezier(0.2,0.8,0.2,1), opacity 300ms';
+                    slide.style.transform = `translate(-50%, -50%) translateX(${Math.round(offsetX)}px) translateZ(${tz}px) rotateY(${rotateY}deg) scale(${scale})`;
                     slide.style.opacity = opacity;
-                    slide.style.zIndex = zIndex;
+                    slide.style.zIndex = z;
+                    slide.setAttribute('aria-hidden', opacity === 0 ? 'true' : 'false');
                 });
             }
 
@@ -1089,19 +433,17 @@
                 updateSlides();
             }
 
-            // Event listeners
-            prevBtn.addEventListener('click', prevSlide);
-            nextBtn.addEventListener('click', nextSlide);
+            // Controles
+            prevBtn.addEventListener('click', () => { prevSlide(); restartAutoplay(); });
+            nextBtn.addEventListener('click', () => { nextSlide(); restartAutoplay(); });
 
-            // Click en slides para navegar
-            slides.forEach((slide, index) => {
+            // Click en slides para ir al slide clicado
+            slides.forEach((slide, idx) => {
                 slide.addEventListener('click', () => {
-                    const position = index - currentIndex;
-                    if (position === 1) {
-                        nextSlide();
-                    } else if (position === -1 || position === slides.length - 1) {
-                        prevSlide();
-                    }
+                    if (idx === currentIndex) return;
+                    currentIndex = idx;
+                    updateSlides();
+                    restartAutoplay();
                 });
             });
 
@@ -1111,20 +453,28 @@
                 if (e.key === 'ArrowRight') nextSlide();
             });
 
-            // Auto-play
-            let autoplayInterval = setInterval(nextSlide, 3500);
-
-            // Pausar en hover
-            container.addEventListener('mouseenter', () => {
-                clearInterval(autoplayInterval);
-            });
-
-            container.addEventListener('mouseleave', () => {
+            // Auto-play con pausa en hover
+            function startAutoplay() {
+                if (autoplayInterval) clearInterval(autoplayInterval);
                 autoplayInterval = setInterval(nextSlide, 3500);
-            });
+            }
 
-            // Inicializar
+            function stopAutoplay() {
+                if (autoplayInterval) { clearInterval(autoplayInterval); autoplayInterval = null; }
+            }
+
+            function restartAutoplay() { stopAutoplay(); startAutoplay(); }
+
+            container.addEventListener('mouseenter', stopAutoplay);
+            container.addEventListener('mouseleave', startAutoplay);
+
+            // Re-evaluar en resize (debounced)
+            let rTO;
+            window.addEventListener('resize', () => { clearTimeout(rTO); rTO = setTimeout(() => updateSlides(), 120); });
+
+            // Iniciar autoplay y slide inicial
             updateSlides();
+            startAutoplay();
         })();
     </script>
 </body>
